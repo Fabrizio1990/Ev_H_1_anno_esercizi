@@ -31,34 +31,30 @@ public class EnemyManager : MonoBehaviour {
 
         Vector3 position = new Vector3(posX, 0.5f, posY);
 
-        if (GameManager.instance.gridManager.checkEnemyInPosition(posX, posY))
-            spawnRandomEnemy();
-
-
-        float rotation = 0.0f;
-		float shootDistance = 0.0f;
-		bool isMoving = false;
-		bool isShooting = false;
-
-		switch (enemy) {
-		case enemyType.enemyNormal:
-			break;
-		case enemyType.enemyRay:
-			rotation = 90.0f;
-			shootDistance = 5.0f;
-			isMoving = true;
-			isShooting = true;
-			break;
-		}
+		if (GameManager.instance.gridManager.checkEnemyInPosition (posX, posY))
+			spawnRandomEnemy ();
 
 		GameObject temp = Instantiate (enemyModel, position, Quaternion.identity) as GameObject;
 		temp.tag = "Enemy";
 		Enemy enemyScript = temp.GetComponent<Enemy> ();
-		enemyScript.rotation = rotation;
-		enemyScript.shootDistance = shootDistance;
-		enemyScript.isMoving = isMoving;
-		enemyScript.isShooting = isShooting;
+
+		switch (enemy) {
+		case enemyType.enemyNormal:
+			enemyScript.rotation = 0.0f;
+			enemyScript.shootDistance = 0.0f;
+			enemyScript.isMoving = false;
+			enemyScript.isShooting = false;
+			break;
+		case enemyType.enemyRay:
+			enemyScript.rotation = 90.0f;
+			enemyScript.shootDistance = 5.0f;
+			enemyScript.isMoving = true;
+			enemyScript.isShooting = true;
+			break;
+		}
+
 		temp.GetComponent<Renderer> ().material = GetMaterialFromType(enemy);
+	
 
 	}
 

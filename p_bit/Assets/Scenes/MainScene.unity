@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692534, g: 0.49678725, b: 0.5750856, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692492, g: 0.4967869, b: 0.57508546, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -387,6 +387,8 @@ MonoBehaviour:
   col: 20
   row: 10
   tile: {fileID: 1000010484479860, guid: de55b510c60a65048989d2259eeaa1fe, type: 2}
+  BoundsPrefab: {fileID: 1000011484734648, guid: 3d069fe6e9838b14f809c600c9e8ba78,
+    type: 2}
 --- !u!114 &2062506192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +404,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 1000012567697868, guid: e21ea38d5ba78a940bfd626cff80e1fb,
     type: 2}
   PlayerInstance: {fileID: 0}
+  timeToDestroyEnemy: 5
   inpulseMaxRange: 4
   playerScript: {fileID: 0}
   gridManager: {fileID: 0}

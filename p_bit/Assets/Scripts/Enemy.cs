@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		Destroy (this.gameObject, GameManager.instance.timeToDestroyEnemy);
 	}
 	
 	// Update is called once per frame
@@ -55,6 +55,10 @@ public class Enemy : MonoBehaviour {
 			}
 
 		}
+	}
+
+	void OnDestroy(){
+		GameManager.instance.gridManager.RemoveEnemyInCoord (Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 	}
 
 	IEnumerator ShootLine(){

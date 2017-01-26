@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
     [HideInInspector]
 	public GameObject PlayerInstance;
-	
+
+	public float timeToDestroyEnemy = 3.0f;
     
 	public float inpulseMaxRange;
 
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour {
 	public void Impulse(Vector3 origin){
         float distance = Vector3.Distance(PlayerInstance.transform.position, origin);
         if(distance <= inpulseMaxRange) { 
-            Vector3 direction = PlayerInstance.transform.position - origin;
+			Vector3 direction = (PlayerInstance.transform.position - origin).normalized;
             direction *= distance;
             playerScript.Move(direction);
         }
