@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour {
 	public float shootDistance;
 	public float timeToRotate = 1.0f;
 	public float timeToShoot = .15f;
+    public Transform shootPosition;
 
 	private float timerRotate = 0.0f;
 	private float timerShoot = 0.0f;
@@ -46,10 +47,13 @@ public class Enemy : MonoBehaviour {
 				StopCoroutine (ShootLine());
 				StartCoroutine (ShootLine());
 
-				if (Physics.Raycast (transform.position, transform.forward, out hit, shootDistance)) {
+                Debug.DrawRay(shootPosition.position, transform.forward *shootDistance, Color.red);
+				if (Physics.Raycast (shootPosition.position, transform.forward, out hit, shootDistance)) {
+                    
 					if (hit.collider.gameObject.tag == "Player") {
-						// Fai qualcosa...
-					}
+                        Player playerScript  = hit.collider.gameObject.GetComponent<Player>();
+                        playerScript.Die();
+                    }
 				}
 				timerShoot = 0.0f;
 			}

@@ -11,17 +11,15 @@ public class Player : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
     }
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
     
     public void Move(Vector3 force)
     {
 		rb.AddForce(force * speed *Time.fixedDeltaTime,ForceMode.Impulse);
+    }
+
+    public void Die()
+    {
+        Destroy(this.gameObject);
+        GameManager.instance.GameOver();
     }
 }

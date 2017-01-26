@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
@@ -8,9 +10,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
     [HideInInspector]
 	public GameObject PlayerInstance;
+    public Text gameOverText;
 
-	public float timeToDestroyEnemy = 3.0f;
-    
+    public float timeToDestroyEnemy = 3.0f;
 	public float inpulseMaxRange;
 
     [HideInInspector]
@@ -19,8 +21,10 @@ public class GameManager : MonoBehaviour {
     public GridManager gridManager;
     [HideInInspector]
     public EnemyManager enemyManager;
+
     [HideInInspector]
     public bool isGameOver;
+   
 
 	void Awake(){
         instance = this;
@@ -32,7 +36,8 @@ public class GameManager : MonoBehaviour {
         Vector3 PlayerSpawnposition = new Vector3(gridManager.col / 2, 0.5f, gridManager.row / 2);
 		PlayerInstance  = Instantiate (playerPrefab, PlayerSpawnposition, playerPrefab.transform.rotation) as GameObject;
         playerScript    = PlayerInstance.GetComponent<Player>();
-	}
+
+    }
 	
 
 
@@ -44,6 +49,17 @@ public class GameManager : MonoBehaviour {
             playerScript.Move(direction);
         }
 
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        gameOverText.enabled = true;
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }

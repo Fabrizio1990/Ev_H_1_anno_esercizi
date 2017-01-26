@@ -21,20 +21,27 @@ public class EnemyManager : MonoBehaviour {
     {
         InvokeRepeating("spawnRandomEnemy", 2f, enemySpawnTime);
     }
+    void FixedUpdate()
+    {
+        if (GameManager.instance.isGameOver)
+            CancelInvoke("spawnRandomEnemy");
+    }
 
     private void spawnRandomEnemy(){
-		
 
-		enemy    = (enemyType)Random.Range(0, System.Enum.GetValues(typeof(enemyType)).Length);
+
+        enemy = (enemyType)Random.Range(0, System.Enum.GetValues(typeof(enemyType)).Length);
         int posX = Random.Range(0, GameManager.instance.gridManager.col);
         int posY = Random.Range(0, GameManager.instance.gridManager.row);
 
         Vector3 position = new Vector3(posX, 0.5f, posY);
 
-		if (GameManager.instance.gridManager.checkEnemyInPosition (posX, posY))
+		if (GameManager.instance.gridManager.checkEnemyInPosition (posX, posY)) { 
 			spawnRandomEnemy ();
+            return;
+        }
 
-		GameObject temp = Instantiate (enemyModel, position, Quaternion.identity) as GameObject;
+        GameObject temp = Instantiate (enemyModel, position, Quaternion.identity) as GameObject;
 		temp.tag = "Enemy";
 		Enemy enemyScript = temp.GetComponent<Enemy> ();
 

@@ -12,16 +12,29 @@ public class InputManager : MonoBehaviour {
 	void FixedUpdate () {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-            if(Physics.Raycast(ray,out hitInfo, Mathf.Infinity))
-            {
-                if(hitInfo.transform.gameObject.tag == "Terrain") {
-                    Vector3 origin = hitInfo.point;
-                    GameManager.instance.Impulse(origin);
-                }
-            }
+            if(GameManager.instance.PlayerInstance != null) 
+                SendImpulse(Input.mousePosition);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (GameManager.instance.isGameOver)
+                GameManager.instance.ReloadScene();
         }
 	
 	}
+
+    void SendImpulse(Vector3 mousePos)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity))
+        {
+            if (hitInfo.transform.gameObject.tag == "Terrain")
+            {
+                Vector3 origin = hitInfo.point;
+                GameManager.instance.Impulse(origin);
+            }
+        }
+    }
 }
