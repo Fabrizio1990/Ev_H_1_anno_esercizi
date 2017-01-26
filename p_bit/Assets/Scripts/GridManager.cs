@@ -25,6 +25,8 @@ public class GridManager : MonoBehaviour {
 	}
 
 	public bool checkEnemyInPosition(int x, int y){
+        Debug.Log("x = " + x);
+        Debug.Log("y = " + y);
 		if (grid [x, y] != 'X')
 			return true;
 		return false;

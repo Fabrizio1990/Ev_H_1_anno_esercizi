@@ -8,35 +8,38 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
     [HideInInspector]
 	public GameObject PlayerInstance;
-	public float enemySpawnTime;
+	
+    
+	public float inpulseMaxRange;
+
+    [HideInInspector]
+    public Player playerScript;
+    [HideInInspector]
+    public GridManager gridManager;
+    [HideInInspector]
+    public EnemyManager enemyManager;
     [HideInInspector]
     public bool isGameOver;
-	public float inpulseMaxRange;
-	// Use this for initialization
-
-	Player playerScript;
-	float timer;
 
 	void Awake(){
         instance = this;
+        gridManager = GetComponent<GridManager>();
+        enemyManager = GetComponent<EnemyManager>();
 
-	}
+    }
 	void Start () {
-		PlayerInstance  = Instantiate (playerPrefab, spawnPosition.position, playerPrefab.transform.rotation) as GameObject;
+        Vector3 PlayerSpawnposition = new Vector3(gridManager.col / 2, 0.5f, gridManager.row / 2);
+		PlayerInstance  = Instantiate (playerPrefab, PlayerSpawnposition, playerPrefab.transform.rotation) as GameObject;
         playerScript    = PlayerInstance.GetComponent<Player>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
 	public void Impulse(Vector3 origin){
         float distance = Vector3.Distance(PlayerInstance.transform.position, origin);
         if(distance <= inpulseMaxRange) { 
             Vector3 direction = PlayerInstance.transform.position - origin;
             direction *= distance;
-            Debug.Log(distance);
             playerScript.Move(direction);
         }
 

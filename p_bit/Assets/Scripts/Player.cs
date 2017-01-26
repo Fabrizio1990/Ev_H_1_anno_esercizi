@@ -22,6 +22,6 @@ public class Player : MonoBehaviour {
     
     public void Move(Vector3 force)
     {
-        rb.AddForce(force * speed *Time.deltaTime);
+        rb.AddForce(force * speed *Time.deltaTime,ForceMode.Impulse);
     }
 }

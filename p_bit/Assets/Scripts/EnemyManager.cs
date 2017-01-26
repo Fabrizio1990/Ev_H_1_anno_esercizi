@@ -6,17 +6,36 @@ public class EnemyManager : MonoBehaviour {
 	public GameObject enemyModel;
 	public Material[] matEnemy;
 
-	private enum enemyType {
+    public float enemySpawnTime;
+    private float timer;
+
+
+
+    private enum enemyType {
 		enemyNormal,	// 0
 		enemyRay		// 1
-	}
+    }
 	private enemyType enemy;
 
-	public void spawnRandomEnemy(int enemyID, Vector3 position){
-		
-		enemy = (enemyType)enemyID;
+    void Start()
+    {
+        InvokeRepeating("spawnRandomEnemy", 2f, enemySpawnTime);
+    }
 
-		float rotation = 0.0f;
+    private void spawnRandomEnemy(){
+		
+
+		enemy    = (enemyType)Random.Range(0, System.Enum.GetValues(typeof(enemyType)).Length);
+        int posX = Random.Range(0, GameManager.instance.gridManager.col);
+        int posY = Random.Range(0, GameManager.instance.gridManager.row);
+
+        Vector3 position = new Vector3(posX, 0.5f, posY);
+
+        if (GameManager.instance.gridManager.checkEnemyInPosition(posX, posY))
+            spawnRandomEnemy();
+
+
+        float rotation = 0.0f;
 		float shootDistance = 0.0f;
 		bool isMoving = false;
 		bool isShooting = false;
